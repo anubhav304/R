@@ -1,0 +1,12 @@
+url<-"https://quotes.toscrape.com/"
+html_content<-read_html(url)
+html_content
+quote_path<-'//*[@class="quote"]/span[1]'
+author_path<-'//*[@class="quote"]/span[2]/small'
+quotes<-html_content%>%html_nodes(xpath=quote_path)%>%html_text()%>%trimws()
+print(quotes)
+author<-html_content%>%html_nodes(xpath=author_path)%>%html_text()%>%trimws()
+print(author)
+quote_data<-data.frame(QUOTE=quotes,AUTHOR=author)
+print(quote_data)
+write.csv(quote_data,"quote.csv",row.names=FALSE)
